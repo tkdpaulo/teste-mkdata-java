@@ -35,7 +35,7 @@ public class Cliente {
 
     private boolean ativo;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "cliente", orphanRemoval = false)
     @JsonManagedReference
     private List<Telefone> telefones;
 
