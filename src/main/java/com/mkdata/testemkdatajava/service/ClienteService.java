@@ -3,6 +3,7 @@ package com.mkdata.testemkdatajava.service;
 import com.mkdata.testemkdatajava.ResourceAlreadyExistsException;
 import com.mkdata.testemkdatajava.ResourceNotFoundException;
 import com.mkdata.testemkdatajava.model.Cliente;
+import com.mkdata.testemkdatajava.model.Telefone;
 import com.mkdata.testemkdatajava.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 

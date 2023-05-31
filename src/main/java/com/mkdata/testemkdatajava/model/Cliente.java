@@ -1,5 +1,6 @@
 package com.mkdata.testemkdatajava.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class Cliente {
     private boolean ativo;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", orphanRemoval = true)
+    @JsonManagedReference
     private List<Telefone> telefones;
 
     public void adicionarTelefone(Telefone telefone) {
