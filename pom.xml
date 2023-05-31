@@ -57,15 +57,14 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>3.0.3</version>
 				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
+					<appName>teste-mkdata-java</appName>
+					<processTypes>
+						<web>java $JAVA_OPTS -jar target/nome-do-seu-arquivo-jar.jar</web>
+					</processTypes>
 				</configuration>
 			</plugin>
 		</plugins>
