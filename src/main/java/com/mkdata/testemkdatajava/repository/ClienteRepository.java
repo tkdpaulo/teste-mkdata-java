@@ -9,7 +9,6 @@ import java.util.List;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    Cliente findByCpfCnpj(String cpfCnpj);
     List<Cliente> findByNomeContainingIgnoreCaseAndAtivoTrue(String nome);
     List<Cliente> findByNomeContainingIgnoreCase(String nome);
     boolean existsByCpfCnpj(String cpfCnpj);

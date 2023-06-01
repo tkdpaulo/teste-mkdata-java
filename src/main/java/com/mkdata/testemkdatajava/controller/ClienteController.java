@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/clientes")
@@ -59,7 +57,6 @@ public class ClienteController {
     public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long clienteId, @RequestBody Cliente cliente) {
         Cliente clienteExistente = clienteRepository.findById(clienteId).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado com o ID: " + clienteId));
 
-        // Atualizar os campos do cliente existente com os dados enviados no corpo da requisição
         clienteExistente.setNome(cliente.getNome());
         clienteExistente.setTipo(cliente.getTipo());
         clienteExistente.setCpfCnpj(cliente.getCpfCnpj());
@@ -67,20 +64,16 @@ public class ClienteController {
         clienteExistente.setDataCadastro(cliente.getDataCadastro());
         clienteExistente.setAtivo(cliente.isAtivo());
 
-        // Atualizar os telefones do cliente existente
         List<Telefone> telefonesAtualizados = new ArrayList<>();
         for (Telefone telefone : cliente.getTelefones()) {
             if (telefone.getId() != null) {
-                // Se o telefone já possui um ID, é um telefone existente a ser atualizado
                 Telefone telefoneExistente = telefoneRepository.findById(telefone.getId()).orElseThrow(() -> new ResourceNotFoundException("Telefone não encontrado com o ID: " + telefone.getId()));
-//                telefoneExistente.setCliente(cliente);
+
                 telefoneExistente.setDdd(telefone.getDdd());
                 telefoneExistente.setNumero(telefone.getNumero());
                 telefonesAtualizados.add(telefoneExistente);
             } else {
-                // Se o telefone não possui um ID, é um novo telefone a ser adicionado
                 Telefone novoTelefone = new Telefone();
-//                novoTelefone.setCliente(cliente);
                 novoTelefone.setDdd(telefone.getDdd());
                 novoTelefone.setNumero(telefone.getNumero());
                 novoTelefone.setCliente(clienteExistente);
@@ -88,7 +81,6 @@ public class ClienteController {
             }
         }
 
-        // Remover os telefones que foram removidos da lista de telefones atualizados
         List<Telefone> telefonesRemover = new ArrayList<>();
         for (Telefone telefoneExistente : clienteExistente.getTelefones()) {
             if (!telefonesAtualizados.contains(telefoneExistente)) {
@@ -100,7 +92,6 @@ public class ClienteController {
             clienteExistente.removerTelefone(telefoneRemover);
         }
 
-//        clienteExistente.setTelefones(telefonesAtualizados);
 
         // Salvar o cliente atualizado no banco de dados
         if (!telefonesAtualizados.isEmpty()) {
